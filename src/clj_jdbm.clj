@@ -25,6 +25,21 @@
                                        key val)) options))]
        (RecordManagerFactory/createRecordManager filename props))))
 
+(defprotocol JdbmStore
+  "Protocol to handle difference in API of JDBM stores"
+  (db-fetch [this key] "gets a value")
+  (db-store [this key val] "inserts a value"))
+
+(extend-type BTree
+  JdbmStore
+  (db-fetch [this key] (.find this key))
+  (db-store [this key val] (.insert this key val true) val))
+
+(extend-type HTree
+  JdbmStore
+  (db-fetch [this key] (.get this key))
+  (db-store [this key val] (.put this key val) val))
+
 (defn load-db
   "Load an existing database."
   [type manager id & [comparator]]
@@ -54,15 +69,6 @@
   "Close a db manager."
   [manager]
   (.close manager))
-
-(defn db-fetch
-  [db key]
-  (.get db key))
-
-(defn db-store
-  [db key value]
-  (.put db key value)
-  value)
 
 (defn db-delete
   [db key]
