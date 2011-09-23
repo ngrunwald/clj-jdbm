@@ -39,6 +39,8 @@ Transaction support:
     (jdbm/db-fetch btree "foo")) ; 60
 ```
 
+For more details see tests and function documentation.
+
 ## License
 
 Copyright (C) 2011 [Linkfluence](http://us.linkfluence.net)
