@@ -17,7 +17,7 @@ Some basic uses:
       btree (jdbm/get-db :btree manager "test2" (StringComparator.))]
   (jdbm/db-store htree "foo" 50) ; 50
   (jdbm/db-fetch htree "foo") ; 50
-  (jdbm/db-update htree "foo" inc)
+  (jdbm/db-update htree "foo" inc) ; 51
   (letfn [(add [val & args] (apply + val args))]
      (jdbm/db-update htree "bar" add :args [5 6] :default 0))) ; 11
 ```
@@ -27,7 +27,7 @@ Transaction support:
 ```clojure
 (let [manager (jdbm/create-manager "path/to/file")
       btree (jdbm/get-db :btree manager "test3" (StringComparator.))]
-  (jdbm/db-store btree "foo" 50) ; 50
+  (jdbm/db-store btree "foo" 60) ; 60
   (.commit manager)
   (try
     (jdbm/with-txn manager
