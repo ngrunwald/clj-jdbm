@@ -1,1 +1,0 @@
-(ns clj-jdbm.core)
