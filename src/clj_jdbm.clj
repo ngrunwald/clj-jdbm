@@ -32,12 +32,16 @@
 
 (extend-type BTree
   JdbmStore
-  (db-fetch [this key] (.find this key))
+  (db-fetch
+    ([this key] (.find this key))
+    ([this key default] (let [current (.find this key)] (if (nil? current) default current))))
   (db-store [this key val] (.insert this key val true) val))
 
 (extend-type HTree
   JdbmStore
-  (db-fetch [this key] (.get this key))
+  (db-fetch
+    ([this key] (.get this key))
+    ([this key default] (let [current (.get this key)] (if (nil? current) default current))))
   (db-store [this key val] (.put this key val) val))
 
 (defn load-db
