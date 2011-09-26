@@ -27,7 +27,7 @@
 
 (defprotocol JdbmStore
   "Protocol to handle difference in API of JDBM stores"
-  (db-fetch [this key] "gets a value")
+  (db-fetch [this key] [this key default] "gets a value with optional default")
   (db-store [this key val] "inserts a value"))
 
 (extend-type BTree
